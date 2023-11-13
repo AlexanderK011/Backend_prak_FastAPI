@@ -26,3 +26,22 @@ class Films(Base):
     short_descr = Column(String)
     genres = relationship("Genres", secondary=Genres_Films, back_populates="films")
 
+class CategoryNews(Base):
+    __tablename__ = 'categorynews'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+
+
+class News(Base):
+    __tablename__ = 'news'
+    id = Column(Integer, primary_key = True, autoincrement = True)
+    name = Column(String,nullable=False)
+    description = Column(String)
+    cat_id = Column(ForeignKey('categorynews.id'))
+
+class comments(Base):
+    __tablename__ = 'comments'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nameuser = Column(String, nullable=False)
+    message = Column(String)
+    new_id = Column(ForeignKey('news.id'))
