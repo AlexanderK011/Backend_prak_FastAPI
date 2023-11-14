@@ -42,106 +42,130 @@ nav a:hover {
     transition: 1s;
 }
 
+.burger{
+    width: 30px;
+    height: 30px;
+    display: none;
+}
+
+.burger span:nth-child(2) {
+    width: 30px;
+    border: 2px solid;
+    background: black;
+    transform: translate(-1px, 17px);
+    display: block;
+    border-radius: 28px;
+}
+
+.burger span:nth-child(1) {
+    width: 30px;
+    border: 2px solid;
+    background: black;
+    transform: translate(-1px, 12px);
+    display: block;
+    border-radius: 28px;
+}
+
+.burger span:nth-child(3) {
+    width: 30px;
+    border: 2px solid;
+    background: black;
+    transform: translate(-1px, -5px);
+    display: block;
+    border-radius: 28px;
+}
+.nav_mobile{
+    display: none;
+}
+
 /* Main Content Styles */
 .main-content {
     display: flex;
     justify-content: space-around;
-    margin: 20px 0;
+    margin: 12px 0;
 }
 
-.featured-movie, .latest-reviews {
-    width: 45%;
+.films_block {
+    width: 95%;
     padding: 15px;
+    min-height: 780px;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.categorys{
+    display: flex;
+    border-top: 1px solid rgba(0,0,0,.08);
+    margin-left: 0.5%;
+    margin-bottom: 20px;
+}
+.categorys p{
+    color: #bdbdbd;
+}
 
-.featured-movie img {
+.categorys a{
+    color: #bdbdbd;
+}
+
+.films_block img {
     width: 100%;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
-.featured-movie h2, .latest-reviews h2 {
+.film {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 9%;
+}
+.films_block h2 {
     color: #333;
 }
 
-.featured-movie p {
+.films_block p {
     color: #666;
 }
 
-.featured-movie a {
-    color: #3498db;
+.films_block a {
     text-decoration: none;
     display: block;
     margin-top: 10px;
 }
-
-/* Sidebar Styles */
-.sidebar {
-    width: 25%;
-}
-
-.search {
-    margin-bottom: 20px;
-}
-
-.search input {
-    width: 70%;
-    padding: 8px;
-}
-
-.search button {
-    padding: 8px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.tags h2 {
-    color: #333;
-}
-
-.tags ul {
-    list-style: none;
-    padding: 0;
-}
-
-.tags li {
-    margin-bottom: 5px;
-}
-
-.tags a {
-    color: #3498db;
-    text-decoration: none;
+.films_block a:hover {
+    color:black;
+    transition: 0.5s;
 }
 
 /* Footer Styles */
 footer {
-    background-color: #312e2e;
+    background-color: #484242;
     color: white;
     text-align: center;
     padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-article li{
-    list-style-type: none;
-}
-
-article a{
-    text-decoration: none;
-}
-
-article a:hover{
-    text-decoration: underline;
-    color: blueviolet;
-    transition: 1s;
 }
 
 
 
+/* Адаптация */
+
+@media (max-width:600px){
+    .burger{
+        width: 30px;
+        height: 30px;
+        display: block;
+    }
+    .menu{
+        display: none;
+    }
+    .nav_toggle{
+            display: block;
+            POSITION: absolute;
+            background: #b3b3b3;
+            LEFT: 0;
+            width: 29%;
+            height: -webkit-fill-available;
+            backdrop-filter: blur(5px);
+    }
+
+}

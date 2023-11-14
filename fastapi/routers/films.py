@@ -1,9 +1,14 @@
 from fastapi import APIRouter
 from sqlalchemy.orm import joinedload
 
-from models import Films, Genres
+from models import Films, Genres,News,CategoryNews,Comments
 
 from database import db
+
+from schemas import FilmCreate
+
+from schemas import FilmCreate
+from fastapi import  HTTPException, status
 
 filmsRouter = APIRouter(prefix="",
     tags=["FilmsController"],
@@ -13,6 +18,24 @@ filmsRouter = APIRouter(prefix="",
 async def index():
     films = db.query(Films).all()
     return films
+
+@filmsRouter.post('/newfilm/',response_model=FilmCreate)
+async def addfilm(film : FilmCreate):
+    film = Films(
+        name = film.name,
+        description = film.description,
+        short_descr = film.short_descr
+    )
+    try:
+        db.add(film)
+        db.commit()
+    except:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail='Try again'
+        )
+    return film
 
 @filmsRouter.get('/genres/{genre_id}/')
 async def catFilms(genre_id : int):
@@ -28,3 +51,26 @@ async def filmInfo(id:int):
 async def genres():
     genres = db.query(Genres).all()
     return genres
+
+@filmsRouter.get('/news')
+async def news():
+    return db.query(News).all()
+
+@filmsRouter.get('/news/{id}')
+async def onenew(id : int):
+    onenew = db.query(News).filter(News.id == id).first()
+    return onenew
+
+@filmsRouter.get('/news/cats/')
+async def new_cats():
+    return db.query(CategoryNews).all()
+
+@filmsRouter.get('/cat/new/{cat_id}')
+async def newsincat(cat_id):
+    new = db.query(News).filter(News.cat_id == cat_id).all()
+    return new
+
+@filmsRouter.get('/getcomments/{new_id}')
+async def comments(new_id : int):
+    comms = db.query(Comments).filter(Comments.new_id == new_id).all()
+    return comms

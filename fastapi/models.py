@@ -39,7 +39,7 @@ class News(Base):
     description = Column(String)
     cat_id = Column(ForeignKey('categorynews.id'))
 
-class comments(Base):
+class Comments(Base):
     __tablename__ = 'comments'
     id = Column(Integer, primary_key=True, autoincrement=True)
     nameuser = Column(String, nullable=False)
