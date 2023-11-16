@@ -43,13 +43,18 @@ nav a:hover {
 }
 
 .burger{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 0px;
     display: none;
 }
 
+.menu_mobile{
+    display: none;
+}
+
+
 .burger span:nth-child(2) {
-    width: 30px;
+    width: 25px;
     border: 2px solid;
     background: black;
     transform: translate(-1px, 17px);
@@ -58,7 +63,7 @@ nav a:hover {
 }
 
 .burger span:nth-child(1) {
-    width: 30px;
+    width: 25px;
     border: 2px solid;
     background: black;
     transform: translate(-1px, 12px);
@@ -67,16 +72,33 @@ nav a:hover {
 }
 
 .burger span:nth-child(3) {
-    width: 30px;
+    width: 25px;
     border: 2px solid;
     background: black;
     transform: translate(-1px, -5px);
     display: block;
     border-radius: 28px;
 }
-.nav_mobile{
-    display: none;
+.burg_open span:nth-child(3),span:nth-child(3){
+    width: 30px;
+    transition: 1s;
 }
+.burg_open span:nth-child(2){
+    width: 30px;
+    transition: 1s;
+}
+
+.burg_open span:nth-of-type(1) {
+    display: none;
+  }
+  .burg_open span:nth-of-type(2) {
+    top: 50%;
+    transform: translate(-52%, 92%) rotate(43deg);
+  }
+  .burg_open span:nth-of-type(3) {
+    top: 50%;
+    transform: translate(-50%, 0%) rotate(-45deg); 
+  }
 
 /* Main Content Styles */
 .main-content {
@@ -108,7 +130,14 @@ nav a:hover {
 }
 
 .films_block img {
-    width: 100%;
+    width: fit-content;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.one_film img{
+    width: 50%;
+    height: fit-content;
     border-radius: 5px;
     margin-bottom: 10px;
 }
@@ -118,7 +147,33 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     margin-left: 9%;
+    padding-bottom: 2%;
 }
+
+.film_info {
+    display: flex;
+    padding-top: 1%;
+    padding-left: 8%;
+    width: 85%;
+    flex-direction: column;
+}
+
+.film_info p{
+    padding-left: 1%;
+    padding-bottom:1% ;
+}
+
+.film_info2{
+    display: flex;
+}
+
+.film_info h2{
+    text-align: center;
+}
+.film_name{
+    text-align: center;
+}
+
 .films_block h2 {
     color: #333;
 }
@@ -149,23 +204,86 @@ footer {
 
 /* Адаптация */
 
+@media (min-width:400px) and (max-width:600px){
+    .burgnav_toggle {
+        position: absolute;
+        left: 53% !important; 
+    }
+    .menu_mobile li {
+        padding-bottom: 6% !important;
+        margin-bottom: 12% !important;
+    }
+}
+
 @media (max-width:600px){
+    .menu_mobile {
+        display: flex;
+        flex-direction: column;
+        min-height: 64%;
+        justify-content: center;
+    }
     .burger{
-        width: 30px;
-        height: 30px;
         display: block;
+        z-index: 10;
     }
     .menu{
         display: none;
     }
     .nav_toggle{
-            display: block;
-            POSITION: absolute;
-            background: #b3b3b3;
-            LEFT: 0;
-            width: 29%;
-            height: -webkit-fill-available;
-            backdrop-filter: blur(5px);
+        background: #333;
+        LEFT: 0;
+        position: fixed;
+        top: 0;
+        width: 37%;
+        height: -webkit-fill-available;
+        backdrop-filter: blur(5px);
+        transition: 0.7s;
+        display: block;
+        z-index: 10;
+        padding: 0 1.5em 1.5em;
     }
-
+    .burgnav_toggle {
+        position: absolute;
+        left: 57%;
+    }
+    .nav_off{
+            width: 29%;
+            position: absolute;
+            left: -500px;
+            transition: 1s;
+            height: -webkit-fill-available;
+            display: block;
+    }
+    .window_on{
+        background-color: rgba(0,0,0,0.4);
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0.8;
+        transition: opacity 0.2s ease-in-out;
+        z-index: 1;
+    }
+    .menu_mobile a{
+        text-decoration: none;
+        color: white;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        padding: 0.6em 0.5em;
+    }
+    .menu_mobile li {
+        border-bottom: 1px solid rgb(224 230 255 / 8%);
+        list-style-type: none;
+        padding-bottom: 5%;
+        margin-bottom: 21%;
+        font-size: 19px;
+        }
+        .film_info2 {
+            flex-direction: column;
+        }
+        .films_block img {
+            width: 79%;
+        }
 }
+

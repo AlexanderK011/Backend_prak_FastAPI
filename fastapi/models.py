@@ -1,4 +1,4 @@
-from sqlalchemy import MetaData, Column, Integer, String, ForeignKey, Table
+from sqlalchemy import MetaData, Column, Integer, String, ForeignKey, Table,Date
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -24,6 +24,7 @@ class Films(Base):
     name = Column(String, nullable=False)
     description = Column(String, nullable = True)
     short_descr = Column(String)
+    year_cr = Column(Date)
     genres = relationship("Genres", secondary=Genres_Films, back_populates="films")
 
 class CategoryNews(Base):
