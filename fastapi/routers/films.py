@@ -5,7 +5,7 @@ from models import Films, Genres,News,CategoryNews,Comments
 
 from database import db
 
-from schemas import FilmCreate
+from schemas import FilmCreate, CommentCreate
 
 from schemas import FilmCreate
 from fastapi import  HTTPException, status
@@ -74,3 +74,21 @@ async def newsincat(cat_id):
 async def comments(new_id : int):
     comms = db.query(Comments).filter(Comments.new_id == new_id).all()
     return comms
+
+@filmsRouter.post('/commentcreate', response_model=CommentCreate)
+async def commcreate(comment:CommentCreate):
+    comment = Comments(
+        nameuser=comment.nameuser,
+        message=comment.message,
+        new_id=comment.new_id
+    )
+    try:
+        db.add(comment)
+        db.commit()
+    except:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail='Try again'
+        )
+    return comment
