@@ -8,3 +8,109 @@ document.addEventListener("DOMContentLoaded",function(){
         document.querySelector('.burger').classList.toggle("burg_open")
     })
 })
+
+// index&film start
+if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
+async function uploadMultiple() {
+    const response = await fetch("http://127.0.0.1:8000/", {
+      method: "GET",
+    });
+    const result = await response.json();
+    for (i of result){
+      console.log(i)
+    }
+}
+uploadMultiple()
+
+if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
+  async function uploadMultiple() {
+      const response = await fetch("http://127.0.0.1:8000/genres", {
+        method: "GET",
+      });
+      const result = await response.json();
+      for (i of result){
+        console.log(i)
+      }
+  }
+  uploadMultiple()
+  }
+
+  if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/film.html" ){
+    async function uploadMultiple() {
+        const response = await fetch("http://127.0.0.1:8000/film/1/", {
+          method: "GET",
+        });
+        const result = await response.json();
+        console.log(result)
+        for (i in result){
+          if (i == 'genres'){
+            for (o of result[i]){
+              console.log(o.name)
+            }
+          }else{
+          console.log(result[i])
+          }
+        }
+    }
+    uploadMultiple()
+    }
+// index&film end
+
+// news&new start
+}
+if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" ){
+  async function uploadMultiple() {
+      const response = await fetch("http://127.0.0.1:8000/news", {
+        method: "GET",
+      });
+      const result = await response.json();
+      for (i of result){
+        console.log(i)
+      }
+  }
+  uploadMultiple()
+}
+
+if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" ){
+  async function uploadMultiple() {
+      const response = await fetch("http://127.0.0.1:8000/news/cats/", {
+        method: "GET",
+      });
+      const result = await response.json();
+      for (i of result){
+        console.log(i)
+      }
+  }
+  uploadMultiple()
+  }
+
+  if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/new.html" ){
+    async function uploadMultiple() {
+        const response = await fetch("http://127.0.0.1:8000/news/2", {
+          method: "GET",
+        });
+        const result = await response.json();
+        console.log(result.name)
+        console.log(result.description)
+    }
+    uploadMultiple()}
+// news&new end
+
+
+
+//  cooments start
+  if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/new.html" ){
+    async function uploadMultiple() {
+        const response = await fetch("http://127.0.0.1:8000/getcomments/1", {
+          method: "GET",
+        });
+        const result = await response.json();
+        console.log(result)
+        for (i of result){
+          console.log(i.nameuser)
+          console.log(i.message)
+        }
+    }
+    uploadMultiple()}
+
+    //  cooments end
