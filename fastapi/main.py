@@ -1,10 +1,6 @@
 from fastapi import FastAPI
-from sqlalchemy.orm import load_only, joinedload
 from starlette.middleware.cors import CORSMiddleware
-
-from database import db
-from routers import films
-from models import Films,Genres_Films, Genres
+from routers import films,news
 
 app=FastAPI()
 
@@ -17,3 +13,4 @@ app.add_middleware(
 )
 
 app.include_router(films.filmsRouter)
+app.include_router(news.newsRouter)
