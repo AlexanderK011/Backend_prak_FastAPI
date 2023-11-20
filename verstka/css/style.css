@@ -150,6 +150,70 @@ nav a:hover {
     padding-bottom: 2%;
 }
 
+
+
+.addfilms:hover{
+    transition: 1s;
+    background-color: #9999c9;
+}
+
+.black_window {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    left: 50%;
+    top:5%;
+}
+
+.filmfomr{
+    display: none;
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: aliceblue;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.flextoform{
+    display: flex;
+}
+
+.filmfomr p{
+    position: absolute;
+    right: 0;
+    top: 0;
+    color:red;
+    font-size: xx-large;
+}
+
+.filmfomr p:hover{
+    transition: 1s;
+    background-color: #333;
+    cursor: pointer;
+}
+
+.filmfomr form{
+    display: flex;
+    flex-direction: column;
+}
+
+.filmfomr form .sendform{
+    margin-top: 8%;
+    height: 29px;
+}
+
+.addfilms {
+    border: 1px solid;
+    width: 140px;
+    height: 28px;
+    text-align: center;
+    color: black;
+    transition: 1s;
+    cursor: pointer;
+}
+
 .film_info {
     display: flex;
     padding-top: 1%;
@@ -320,6 +384,9 @@ footer {
         }
         .film_info2 .new_p {
             width:100%;
+        }
+        .filmfomr {
+            width: 92%;
         }
 }
 

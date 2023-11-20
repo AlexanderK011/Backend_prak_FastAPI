@@ -18,7 +18,7 @@
             <ul class="menu">
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="news.html">Новости</a></li>
-                <li><a href="#">Контакты</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
             </ul>
         </nav>
     </header>
@@ -26,7 +26,7 @@
         <ul class="menu_mobile">
             <li><a href="index.html">Главная</a></li>
             <li><a href="news.html">Новости</a></li>
-            <li><a href="#">Контакты</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
         </ul>
     </div>
     <section class="main-content">
@@ -36,6 +36,7 @@
                 <a class="cats" href="">Категория 1,</a>
                 <a class="cats" href="">Категория 2</a>
             </div>
+            <a class="addfilms">Добавить фильм</a>
             <div class="film">
             <h2>Название фильма</h2>
             <img src="#" alt="film_photo">
@@ -68,9 +69,20 @@
         <p>&copy; 2023 КиноБлог. Все права защищены.</p>
     </footer>
 <div class="black_window">
+    <div class="filmfomr">
+        <p class="close">X</p>
+        <form action="add" method="post">
+            <label for="name">Название фильма:</label>
+            <input type="name" name="name" id="name_film">
+            <label for="description">Описание:</label>
+            <textarea name="description" id="description_film" cols="14" rows="10"></textarea>
+            <label for="short_description">Краткое описание:</label>
+            <textarea name="short_description" id="short_description_film" cols="14" rows="5"></textarea>
+            <input class="sendform" type="button" value="Добавить">
+        </form>
+    </div>
 </div>
-    <script class="script1" src="js/main.js">
-        page = index
+    <script src="js/main.js">
     </script>
 </body>
 </html>

@@ -21,7 +21,8 @@ async def addfilm(film : FilmCreate):
     film = Films(
         name = film.name,
         description = film.description,
-        short_descr = film.short_descr
+        short_descr = film.short_descr,
+        year_cr = film.year_cr
     )
     try:
         db.add(film)

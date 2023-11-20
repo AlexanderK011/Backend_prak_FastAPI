@@ -1,3 +1,4 @@
+// Burger
 let burger = document.querySelector('.burger')
 document.addEventListener("DOMContentLoaded",function(){
     burger.addEventListener("click",function(){
@@ -8,6 +9,22 @@ document.addEventListener("DOMContentLoaded",function(){
         document.querySelector('.burger').classList.toggle("burg_open")
     })
 })
+
+// add films form modal
+let filmform = document.querySelector('.filmfomr')
+let addfilms = document.querySelector('.addfilms')
+document.addEventListener("DOMContentLoaded",function(){
+  addfilms.addEventListener("click",function(){
+    filmform.classList.toggle('flextoform')
+  })
+})
+
+// close modal
+document.querySelector('.close').addEventListener("click",function(){
+  filmform.classList.toggle('flextoform')
+})
+
+
 
 // index&film start
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
