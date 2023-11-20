@@ -10,23 +10,8 @@ document.addEventListener("DOMContentLoaded",function(){
     })
 })
 
-// add films form modal
-let filmform = document.querySelector('.filmfomr')
-let addfilms = document.querySelector('.addfilms')
-document.addEventListener("DOMContentLoaded",function(){
-  addfilms.addEventListener("click",function(){
-    filmform.classList.toggle('flextoform')
-  })
-})
-
-// close modal
-document.querySelector('.close').addEventListener("click",function(){
-  filmform.classList.toggle('flextoform')
-})
-
-
-
 // index&film start
+filmsblock = document.querySelector('.films_block')
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
 async function uploadMultiple() {
     const response = await fetch("http://127.0.0.1:8000/", {
@@ -34,11 +19,19 @@ async function uploadMultiple() {
     });
     const result = await response.json();
     for (i of result){
-      console.log(i)
+      film = document.createElement('div')
+      film.classList.add('film')
+      film.appendChild(document.createElement('h2')).innerHTML = i.name
+      film.appendChild(document.createElement('p')).innerHTML = i.short_descr
+      a = film.appendChild(document.createElement('a'))
+      a.href = 'film.html'
+      a.innerHTML = 'Смотреть'
+      filmsblock.appendChild(film)
     }
 }
 uploadMultiple()
 
+categorys = document.querySelector('.categorys')
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
   async function uploadMultiple() {
       const response = await fetch("http://127.0.0.1:8000/genres", {
@@ -46,7 +39,10 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" 
       });
       const result = await response.json();
       for (i of result){
-        console.log(i)
+        a = categorys.appendChild(document.createElement('a'))
+        a.classList.add('cats')
+        a.innerHTML = i.name+', '
+        a.href ='index.html'
       }
   }
   uploadMultiple()
@@ -82,12 +78,19 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
       });
       const result = await response.json();
       for (i of result){
-        console.log(i)
+        film = document.createElement('div')
+      film.classList.add('film')
+      film.appendChild(document.createElement('h2')).innerHTML = i.name
+      film.appendChild(document.createElement('p')).innerHTML = i.description
+      filmsblock.appendChild(film)
+      a = film.appendChild(document.createElement('a'))
+      a.href = 'new.html'
+      a.innerHTML = 'Смотреть'
       }
   }
   uploadMultiple()
 }
-
+categorys = document.querySelector('.categorys')
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" ){
   async function uploadMultiple() {
       const response = await fetch("http://127.0.0.1:8000/news/cats/", {
@@ -96,6 +99,10 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
       const result = await response.json();
       for (i of result){
         console.log(i)
+        a = categorys.appendChild(document.createElement('a'))
+        a.classList.add('cats')
+        a.innerHTML = i.name+', '
+        a.href ='news.html'
       }
   }
   uploadMultiple()
@@ -131,3 +138,21 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
     uploadMultiple()}
 
     //  cooments end
+
+
+
+
+
+    // add films form modal
+let filmform = document.querySelector('.filmfomr')
+let addfilms = document.querySelector('.addfilms')
+document.addEventListener("DOMContentLoaded",function(){
+  addfilms.addEventListener("click",function(){
+    filmform.classList.toggle('flextoform')
+  })
+})
+
+// close modal
+document.querySelector('.close').addEventListener("click",function(){
+  filmform.classList.toggle('flextoform')
+})
