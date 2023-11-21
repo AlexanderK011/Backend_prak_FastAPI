@@ -250,6 +250,8 @@ nav a:hover {
 
 .films_block p {
     color: #666;
+    overflow-wrap: break-word;
+    width: 100%;
 }
 
 .films_block a {

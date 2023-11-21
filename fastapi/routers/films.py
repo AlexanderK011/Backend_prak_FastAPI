@@ -43,7 +43,7 @@ async def catFilms(genre_id : int):
 @filmsRouter.get('/film/{id}')
 async def filmInfo(id:int):
     film = db.query(Films).filter(Films.id == id).options(joinedload(Films.genres).load_only(Genres.name)).where(Films.id == id).one()
-    return {'name':film.name,'description':film.description,'genres':film.genres}
+    return {'name':film.name,'year_cr':film.year_cr,'description':film.description,'genres':film.genres}
 
 @filmsRouter.get('/genres')
 async def genres():

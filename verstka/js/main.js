@@ -26,10 +26,15 @@ async function uploadMultiple() {
       a = film.appendChild(document.createElement('a'))
       a.href = 'film.html'
       a.innerHTML = 'Смотреть'
+      a.setAttribute('id',i.id)
       filmsblock.appendChild(film)
     }
+    let fu1 = document.querySelector('.films_block').addEventListener('click', (e)=>{
+      localStorage.setItem("id",e.target.id);
+    })
 }
 uploadMultiple()
+}
 
 categorys = document.querySelector('.categorys')
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
@@ -47,10 +52,9 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" 
   }
   uploadMultiple()
   }
-
   if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/film.html" ){
     async function uploadMultiple() {
-        const response = await fetch("http://127.0.0.1:8000/film/1/", {
+        const response = await fetch(`http://127.0.0.1:8000/film/${parseInt(localStorage.getItem("id"))}`, {
           method: "GET",
         });
         const result = await response.json();
@@ -58,19 +62,23 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" 
         for (i in result){
           if (i == 'genres'){
             for (o of result[i]){
-              console.log(o.name)
+              document.querySelector('.Film_Genre').innerHTML = 'Жанры: ' +' ' + o.name
             }
           }else{
+            document.querySelector('.film_name').innerHTML = result['name']
+            document.querySelector('.Year_create').innerHTML = 'Год создания: ' +' ' + result.year_cr
+            document.querySelector('.textaboFilm').textContent = result.description
           console.log(result[i])
           }
         }
     }
     uploadMultiple()
     }
+
 // index&film end
 
 // news&new start
-}
+
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" ){
   async function uploadMultiple() {
       const response = await fetch("http://127.0.0.1:8000/news", {
@@ -86,9 +94,17 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
       a = film.appendChild(document.createElement('a'))
       a.href = 'new.html'
       a.innerHTML = 'Смотреть'
-      }
+      a.setAttribute("id",i.id)
+    }
+     document.querySelector('.films_block').addEventListener('click', (e)=>{
+      console.log(e.target)
+      localStorage.setItem("id",e.target.id);
+      console.log(parseInt(localStorage.getItem("id")))
+    })
   }
   uploadMultiple()
+
+
 }
 categorys = document.querySelector('.categorys')
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" ){
@@ -110,12 +126,12 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
 
   if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/new.html" ){
     async function uploadMultiple() {
-        const response = await fetch("http://127.0.0.1:8000/news/2", {
+        const response = await fetch(`http://127.0.0.1:8000/news/${parseInt(localStorage.getItem("id"))}`, {
           method: "GET",
         });
         const result = await response.json();
-        console.log(result.name)
-        console.log(result.description)
+        document.querySelector('.film_name').innerHTML = result.name
+        document.querySelector('.new_p').innerHTML = result.description
     }
     uploadMultiple()}
 // news&new end
@@ -123,16 +139,25 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
 
 
 //  cooments start
+comms= document.querySelector('.comments')
   if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/new.html" ){
     async function uploadMultiple() {
-        const response = await fetch("http://127.0.0.1:8000/getcomments/1", {
+        const response = await fetch(`http://127.0.0.1:8000/getcomments/${parseInt(localStorage.getItem("id"))}`, {
           method: "GET",
         });
         const result = await response.json();
         console.log(result)
         for (i of result){
-          console.log(i.nameuser)
-          console.log(i.message)
+          comment =document.createElement('div')
+          comment.classList.add('comment')
+          p = document.createElement('p')
+          comment.appendChild(p)
+          p.classList.add('com_name')
+          p.innerHTML = i.nameuser
+          p = document.createElement('p')
+          comment.appendChild(p)
+          p.innerHTML = i.message
+          comms.appendChild(comment)
         }
     }
     uploadMultiple()}
