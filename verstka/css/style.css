@@ -125,6 +125,10 @@ nav a:hover {
     color: #bdbdbd;
 }
 
+.cats{
+    cursor: pointer;
+}
+
 .categorys a{
     color: #bdbdbd;
 }

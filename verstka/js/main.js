@@ -18,6 +18,7 @@ async function uploadMultiple() {
       method: "GET",
     });
     const result = await response.json();
+    
     for (i of result){
       film = document.createElement('div')
       film.classList.add('film')
@@ -35,7 +36,6 @@ async function uploadMultiple() {
 }
 uploadMultiple()
 }
-
 categorys = document.querySelector('.categorys')
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
   async function uploadMultiple() {
@@ -47,18 +47,45 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" 
         a = categorys.appendChild(document.createElement('a'))
         a.classList.add('cats')
         a.innerHTML = i.name+', '
-        a.href ='index.html'
+        a.setAttribute('id',i.id)
       }
+      let fu1 = document.querySelector('.categorys').addEventListener('click', (e)=>{
+        localStorage.setItem("id",e.target.id);
+          const films_all = document.getElementsByClassName('film');
+          Array.from(films_all).forEach(element => {
+            element.remove() 
+        });
+        if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
+          async function uploadMultiple() {
+              const response = await fetch(`http://127.0.0.1:8000/genres/${parseInt(localStorage.getItem("id"))}`, {
+                method: "GET",
+              });
+              const result = await response.json();
+              for (i of result.films){
+                film = document.createElement('div')
+                film.classList.add('film')
+                film.appendChild(document.createElement('h2')).innerHTML = i.name
+                film.appendChild(document.createElement('p')).innerHTML = i.short_descr
+                a = film.appendChild(document.createElement('a'))
+                a.href = 'film.html'
+                a.innerHTML = 'Смотреть'
+                a.setAttribute('id',i.id)
+                filmsblock.appendChild(film)
+          }
+          }
+          uploadMultiple()
+          }
+      })
   }
   uploadMultiple()
   }
+
   if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/film.html" ){
     async function uploadMultiple() {
         const response = await fetch(`http://127.0.0.1:8000/film/${parseInt(localStorage.getItem("id"))}`, {
           method: "GET",
         });
         const result = await response.json();
-        console.log(result)
         for (i in result){
           if (i == 'genres'){
             for (o of result[i]){
@@ -68,7 +95,6 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" 
             document.querySelector('.film_name').innerHTML = result['name']
             document.querySelector('.Year_create').innerHTML = 'Год создания: ' +' ' + result.year_cr
             document.querySelector('.textaboFilm').textContent = result.description
-          console.log(result[i])
           }
         }
     }
@@ -97,9 +123,7 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
       a.setAttribute("id",i.id)
     }
      document.querySelector('.films_block').addEventListener('click', (e)=>{
-      console.log(e.target)
       localStorage.setItem("id",e.target.id);
-      console.log(parseInt(localStorage.getItem("id")))
     })
   }
   uploadMultiple()
@@ -114,11 +138,9 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
       });
       const result = await response.json();
       for (i of result){
-        console.log(i)
         a = categorys.appendChild(document.createElement('a'))
         a.classList.add('cats')
         a.innerHTML = i.name+', '
-        a.href ='news.html'
       }
   }
   uploadMultiple()
@@ -146,7 +168,6 @@ comms= document.querySelector('.comments')
           method: "GET",
         });
         const result = await response.json();
-        console.log(result)
         for (i of result){
           comment =document.createElement('div')
           comment.classList.add('comment')
