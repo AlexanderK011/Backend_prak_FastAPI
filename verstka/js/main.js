@@ -30,12 +30,64 @@ async function uploadMultiple() {
       a.setAttribute('id',i.id)
       filmsblock.appendChild(film)
     }
-    let fu1 = document.querySelector('.films_block').addEventListener('click', (e)=>{
-      localStorage.setItem("id",e.target.id);
-    })
 }
 uploadMultiple()
+let fu1 = document.querySelector('.films_block').addEventListener('click', (e)=>{
+  localStorage.setItem("id",e.target.id);
+})
 }
+
+async function film_from_cat() {
+  // ${parseInt(localStorage.getItem("test"))}
+  const response = await fetch(`http://127.0.0.1:8000/genres/${window.film_genr}`, {  
+    method: "GET",
+  });
+  const result = await response.json();
+  window.arr1 = new Array()
+  for (i of result.films){
+    window.arr1.push(i.name)
+  }
+  console.log(arr1)
+  const films_all = document.getElementsByClassName('film');
+  Array.from(films_all).forEach(element => {
+    if (!(arr1.indexOf(element.firstChild.innerHTML)> -1)){
+      element.style.display = 'none'
+    } else{
+      element.style.display = 'flex'
+    }   
+});
+}
+
+if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
+let genrupd = document.querySelector('.categorys').addEventListener('click', (e)=>{
+  localStorage.setItem('test', e.target.id);
+  let film_genr = ''
+  window.film_genr = e.target.id
+  e.target.setAttribute('click',true)
+  if (e.target.getAttribute('click') == 'true'){
+    let allincat = document.getElementsByClassName('cats')
+    for (i of allincat){
+      i.setAttribute('click',false)
+    }
+    e.target.setAttribute('click',true)
+  }
+  const films_all = document.getElementsByClassName('film');
+  Array.from(films_all).forEach(element => {
+    element.style.display = 'none'
+  })
+  for (let i = 0; i <1; i++) {
+    film_from_cat();
+    const films_all = document.getElementsByClassName('film');
+    Array.from(films_all).forEach(element => {
+      if (!(arr1.indexOf(element.firstChild.innerHTML)> -1)){
+        element.style.display = 'none'
+      } else{
+        element.style.display = 'flex'
+      }   
+  });
+  }
+})}
+
 categorys = document.querySelector('.categorys')
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
   async function uploadMultiple() {
@@ -49,57 +101,42 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" 
         a.innerHTML = i.name+', '
         a.setAttribute('id',i.id)
       }
-      let fu1 = document.querySelector('.categorys').addEventListener('click', (e)=>{
-        localStorage.setItem("id",e.target.id);
-          const films_all = document.getElementsByClassName('film');
-          Array.from(films_all).forEach(element => {
-            element.remove() 
-        });
-        if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
-          async function uploadMultiple() {
-              const response = await fetch(`http://127.0.0.1:8000/genres/${parseInt(localStorage.getItem("id"))}`, {
-                method: "GET",
-              });
-              const result = await response.json();
-              for (i of result.films){
-                film = document.createElement('div')
-                film.classList.add('film')
-                film.appendChild(document.createElement('h2')).innerHTML = i.name
-                film.appendChild(document.createElement('p')).innerHTML = i.short_descr
-                a = film.appendChild(document.createElement('a'))
-                a.href = 'film.html'
-                a.innerHTML = 'Смотреть'
-                a.setAttribute('id',i.id)
-                filmsblock.appendChild(film)
-          }
-          }
-          uploadMultiple()
-          }
-      })
+//     let genrupd = document.querySelector('.categorys').addEventListener('click', (e)=>{
+//     localStorage.setItem('test', e.target.id);
+//     console.log(localStorage.getItem('test'))
+//     const films_all = document.getElementsByClassName('film');
+//     Array.from(films_all).forEach(element => {
+//       element.style.display = 'none'
+//       // film_from_cat()
+//   });
+// })
   }
   uploadMultiple()
   }
 
-  if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/film.html" ){
-    async function uploadMultiple() {
-        const response = await fetch(`http://127.0.0.1:8000/film/${parseInt(localStorage.getItem("id"))}`, {
-          method: "GET",
-        });
-        const result = await response.json();
-        for (i in result){
-          if (i == 'genres'){
-            for (o of result[i]){
-              document.querySelector('.Film_Genre').innerHTML = 'Жанры: ' +' ' + o.name
-            }
-          }else{
-            document.querySelector('.film_name').innerHTML = result['name']
-            document.querySelector('.Year_create').innerHTML = 'Год создания: ' +' ' + result.year_cr
-            document.querySelector('.textaboFilm').textContent = result.description
+
+if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/film.html" ){
+  async function gefilm() {
+      const response = await fetch(`http://127.0.0.1:8000/film/${parseInt(localStorage.getItem("id"))}`, {
+        method: "GET",
+      });
+      const result = await response.json();
+      console.log(result)
+      for (i in result){
+        if (i == 'genres'){
+          for (o of result[i]){
+            console.log(o)
+            document.querySelector('.Film_Genre').innerHTML = 'Жанры: ' +' ' + o.name
           }
+        }else{
+          document.querySelector('.film_name').innerHTML = result['name']
+          document.querySelector('.Year_create').innerHTML = 'Год создания: ' +' ' + result.year_cr
+          document.querySelector('.textaboFilm').textContent = result.description
         }
-    }
-    uploadMultiple()
-    }
+      }
+  }
+  gefilm()
+  }
 
 // index&film end
 
@@ -183,10 +220,45 @@ comms= document.querySelector('.comments')
     }
     uploadMultiple()}
 
-    //  cooments end
+//  cooments end
 
-
-
+// post add film
+send = document.querySelector('.sendform').addEventListener("click",function(){
+  let datafilm = {
+    name: $('#name_film').val(),
+    description: $('#description_film').val(),
+    short_descr: $('#short_description_film').val(),
+    year_cr: $('#Year_create_film').val()
+  }
+  async function FilmCreate() {
+      const response = await fetch("http://127.0.0.1:8000/newfilm", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(datafilm)
+      });
+      let result = await response.json();
+      if (result.year_cr !== undefined){
+        if (document.querySelector('h4')){
+          document.querySelector('h4').remove()}
+        addp = document.createElement('h4')
+        addp.innerHTML = 'Успешно'
+        filmf = document.querySelector('.filmfomr')
+        filmf.appendChild(addp)
+      }
+      else{
+        if (document.querySelector('h4')){
+          document.querySelector('h4').remove()
+        }
+        addp = document.createElement('h4')
+        addp.innerHTML = 'Ошибка'
+        filmf = document.querySelector('.filmfomr')
+        filmf.appendChild(addp)
+      }
+  }
+  FilmCreate()
+})
 
 
     // add films form modal
