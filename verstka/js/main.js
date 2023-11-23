@@ -223,6 +223,7 @@ comms= document.querySelector('.comments')
 //  cooments end
 
 // post add film
+if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
 send = document.querySelector('.sendform').addEventListener("click",function(){
   let datafilm = {
     name: $('#name_film').val(),
@@ -259,6 +260,47 @@ send = document.querySelector('.sendform').addEventListener("click",function(){
   }
   FilmCreate()
 })
+}
+
+// post add new comments 
+if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/new.html" ){
+send = document.querySelector('.sendcomment_form').addEventListener("click",function(){
+  let datafilm = {
+    nameuser: $('#nameuser').val(),
+    message: $('#message').val(),
+    new_id: parseInt(localStorage.getItem("id"))
+  }
+  async function CommentCreate() {
+      const response = await fetch("http://127.0.0.1:8000/commentcreate", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(datafilm)
+      });
+      let result = await response.json();
+      if (result !== undefined){
+        if (document.querySelector('h4')){
+          document.querySelector('h4').remove()}
+        addp = document.createElement('h4')
+        addp.innerHTML = 'Успешно'
+        filmf = document.querySelector('.commentadd')
+        filmf.appendChild(addp)
+      }
+      else{
+        if (document.querySelector('h4')){
+          document.querySelector('h4').remove()
+        }
+        addp = document.createElement('h4')
+        addp.innerHTML = 'Ошибка'
+        filmf = document.querySelector('.commentadd')
+        filmf.appendChild(addp)
+      }
+  }
+  CommentCreate()
+})
+}
+
 
 
     // add films form modal
