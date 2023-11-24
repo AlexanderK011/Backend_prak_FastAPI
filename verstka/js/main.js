@@ -37,6 +37,7 @@ let fu1 = document.querySelector('.films_block').addEventListener('click', (e)=>
 })
 }
 
+try{
 async function film_from_cat() {
   // ${parseInt(localStorage.getItem("test"))}
   const response = await fetch(`http://127.0.0.1:8000/genres/${window.film_genr}`, {  
@@ -47,7 +48,6 @@ async function film_from_cat() {
   for (i of result.films){
     window.arr1.push(i.name)
   }
-  console.log(arr1)
   const films_all = document.getElementsByClassName('film');
   Array.from(films_all).forEach(element => {
     if (!(arr1.indexOf(element.firstChild.innerHTML)> -1)){
@@ -56,6 +56,9 @@ async function film_from_cat() {
       element.style.display = 'flex'
     }   
 });
+}}
+catch{
+  console.log('--')
 }
 
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" ){
@@ -114,7 +117,6 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/index.html" 
   uploadMultiple()
   }
 
-
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/film.html" ){
   async function gefilm() {
       const response = await fetch(`http://127.0.0.1:8000/film/${parseInt(localStorage.getItem("id"))}`, {
@@ -158,15 +160,60 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
       a.href = 'new.html'
       a.innerHTML = 'Смотреть'
       a.setAttribute("id",i.id)
+      a.setAttribute('showed',true)
     }
      document.querySelector('.films_block').addEventListener('click', (e)=>{
       localStorage.setItem("id",e.target.id);
     })
   }
   uploadMultiple()
-
-
 }
+
+
+if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" ){
+  async function get_Fromcat_new() {
+      const response = await fetch(`http://127.0.0.1:8000/cat/new/${window.id_cat}`, {
+        method: "GET",
+      });
+      const result = await response.json();
+      window.arr1 = new Array()
+  for (i of result){
+    window.arr1.push(i.name)
+  }
+  const films_all = document.getElementsByClassName('film');
+    Array.from(films_all).forEach(element => {
+      if (!(arr1.indexOf(element.firstChild.innerHTML)> -1)){
+        element.style.display = 'none'
+      } else{
+        element.style.display = 'flex'
+      }   
+  });
+
+  }
+  categorys.addEventListener('click',(e)=>{
+    let id_cat = ''
+    window.id_cat = e.target.getAttribute('id_cat')
+    e.target.setAttribute('clicked',true)
+    if (e.target.getAttribute('clicked') == 'true'){
+    let allincat = document.getElementsByClassName('cats')
+    for (i of allincat){
+      i.setAttribute('clicked',false)
+    }
+    e.target.setAttribute('clicked',true)
+  }
+  const news_all = document.getElementsByClassName('film');
+  Array.from(news_all).forEach(element => {
+    element.style.display = 'none'
+  })
+  for (let i = 0; i <1; i++) {
+    get_Fromcat_new();
+  }
+  })
+}
+
+
+
+
 categorys = document.querySelector('.categorys')
 if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" ){
   async function uploadMultiple() {
@@ -178,6 +225,7 @@ if(window.location.pathname=="/D:/projects/uch_prak_fastapi/verstka/news.html" )
         a = categorys.appendChild(document.createElement('a'))
         a.classList.add('cats')
         a.innerHTML = i.name+', '
+        a.setAttribute('id_cat',i.id)
       }
   }
   uploadMultiple()
