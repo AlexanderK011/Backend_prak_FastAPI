@@ -7,6 +7,9 @@ from database import db
 from schemas import FilmCreate
 from fastapi import  HTTPException, status
 
+from schemas import Film,Genre_n2
+
+
 
 filmsRouter = APIRouter(prefix="",
     tags=["FilmsController"],
@@ -38,12 +41,15 @@ async def addfilm(film : FilmCreate):
         )
     return film
 
-@filmsRouter.get('/genres/{genre_id}/')
-async def catFilms(genre_id : int):
-    genrfilms = db.query(Genres).options(joinedload(Genres.films)).where(Genres.id == genre_id).one()
-    return {'films':genrfilms.films,'genre':genrfilms.name,'genre_id':genre_id}
 
-@filmsRouter.get('/film/{id}')
+@filmsRouter.get('/genres/{genre_id}/', response_model=Genre_n2)
+async def catFilms(genre_id : int):
+    genrfilms = db.query(Genres).join(Films, Genres.films).filter(Genres.id == genre_id).one()
+    return {'films':genrfilms.films,'genre_id':genre_id}
+
+
+
+@filmsRouter.get('/film/{id}',response_model=Film)
 async def filmInfo(id:int):
     film = db.query(Films).options(joinedload(Films.genres).load_only(Genres.name)).where(Films.id == id).one()
     return {'name':film.name,'year_cr':film.year_cr,'description':film.description,'genres':film.genres}
